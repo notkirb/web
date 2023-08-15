@@ -2,20 +2,28 @@ body {
   margin: 25px;
   background-color: #252627;
   font-family: arial, sans-serif;
-  font-size: 14px;
-  color: #E5E5E5;
+  font-size: 18px;
+  color: #bdbdbd;
 }
-
-h1 {
+#navheader{
   font-size: 35px;
   font-weight: bold;
   margin-top: 5px;
-  color: #FCA311;
+  color: #f176b4;
+}
+h1{
+  font-size: 35px;
+  font-weight: bold;
+  margin-top: 5px;
+  color: #eeeeee;
 }
 a {
-  font-size: 18px;
   font-weight: normal;
   margin-top: 5px;
-  color: #470FF4;
+  color: #8982e6;
+}
+nav {
+  font-size: 24px;
+  margin-top: 15px;
 }
 
