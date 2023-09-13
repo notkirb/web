@@ -1,0 +1,15 @@
+name: pull
+
+on:
+    push:
+        branches: ["main"]
+
+jobs:
+    build:
+        runs-on: self-hosted
+
+    steps:
+        name: Deploy new site
+        uses: actions/checkout@v3
+        with:
+            cmd: git pull
