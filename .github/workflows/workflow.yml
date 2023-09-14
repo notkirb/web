@@ -8,5 +8,7 @@ jobs:
     pull:
         runs-on: self-hosted
         steps:
-            - name: Deploy new site
+            - name: Change directory
+              run: "cd /var/www/html/web/"
+            - name: Pull source
               run: "git pull"
