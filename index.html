@@ -1,40 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="dark">
 	<head>
+		<link rel="stylesheet" href="bootstrap-5.3.2-dist/css/bootstrap.min.css">
+		<script src="bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="style.css">
         <title>notkirb_</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
 	</head>
-
 	<body>
-        
+		<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-lg">
+			<div class="container">
+			  <a class="navbar-brand" href="index.html">notkirb_</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="projects.html">projects</a> 
+					</li>
+					<li class=" nav-item">
+						<a class="nav-link" href="https://discord.gg/qtB3F6tyBc">discord</a> 
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://twitter.com/@notkirb_">twitter</a> 
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://www.reddit.com/user/kirbylarson">reddit</a> 
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://youtube.com/@notkirb_">youtube</a>
+					</li>
+				</ul>
+			  </div>
+			</div>
+		  </nav>
 		
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="row">
+						<div class="col-sm-9">
+							<h3>About me</h3>
+							<p>Hi, I'm notkirb_. I'm just a silly highschool student who really, really, really, likes computers. I enjoy playing video games, making video games, and coding random stuff. I am a beginner in music, and I am wanting to learn art, but I haven't started. The programming languages I know best are: Scratch (cringe lol), Lua, Python, and C++.</p>
+						</div>
+						<div class="col-sm-3">
+							<img src="silly_cat.jpg" class="img-fluid img-thumbnail float-end">
+						</div>
+					</div>
+					
+					
+					<hr>
+					<h3>Featured Projects</h3>
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="card">
+								<img src="mc_sunset.png">
+								<div class="card-body">
+									<h4 class="card-title">Hemisphere Network</h4>
+									<p class="card-text">Hemisphere Network is a small Minecraft Server with rotating gameplay styles.</p>
+									<a class="btn btn-primary">Play now</a>
+									<a class="btn btn-secondary">Learn More</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="card">
+								<img src="cybersqr_icon.png">
+								<div class="card-body">
+									<h4 class="card-title">// cybersqr();</h4>
+									<p class="card-text">A simple but difficult video game.</p>
+									<a class="btn btn-primary" href="cybersqr.html">Play</a>
+									<a class="btn btn-secondary">Learn More</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="card">
+								<img src="https://media.tenor.com/t3dLLNaI50oAAAAM/cat-cats.gif">
+								<div class="card-body">
+									<h4 class="card-title">Bus but we add a T</h4>
+									<p class="card-text">A Minecraft modpack built for playing on one server.</p>
+									<a class="btn btn-primary">Download</a>
+									<a class="btn btn-secondary">Learn More</a>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="col-sm-4">
+					<h3>News</h3>
+					<h5>Yet another website redesign</h4>
+					<p>I redesigned my website to use Bootstrap, which is a lot easier to work with and it just looks nicer.</p>
+					<hr>
+					<h3>Upcoming events</h3>
+					<h5>No upcoming events.</h4>
+					<hr>
+					<h3>My Certifications</h3>
+					<div class="d-grid gap-2">
 
-		<div class="row">
-		  <div class="column side">
-		  	<nav>
-        	<span>notkirb_</span><br>
-        	<a href="index.html">home</a> <br>
-        	<a href="projects.html">projects</a> <br>
-        	<a href="https://discord.gg/qtB3F6tyBc">discord</a> <br>
-        	<a href="https://twitter.com/@notkirb_">twitter</a> <br>
-        	<a href="https://www.reddit.com/user/kirbylarson">reddit</a> <br>
-        	<a href="https://youtube.com/@notkirb_">youtube</a><br>
-        </nav>
-		  </div>
-		  
-		  <div class="column middle">
-		    <p>welcome to index.html</p>
-		    <p>hi, im notkirb_. im just a silly highschool student who really, really, really, likes computers.</p>
-		    <p>i am offically certified in:</p>
-		    <p><a href="https://certiport.filecamp.com/s/Unity_Exam_Objectives_Artist/fi">Unity Certified User Artist</a><br>
-			<a href="https://learn.microsoft.com/en-us/credentials/certifications/microsoft-office-specialist-associate-2019/">Microsoft Office Specialist: Associate</a></p>
-		    <p>make yourself comfy, it's time to show off my cool stuff.</p>
-		    <p>go ahead and click on the projects page to see what ive been working on lately.</p>
-			  <footer>
-			  	<p>(c) notkirb_ 2023<br>v4.0.1</p>
-			  </footer>
+						<a href="https://certiport.filecamp.com/s/Unity_Exam_Objectives_Artist/fi" class="btn btn-secondary">Unity Certified User Artist</a>
+						<a href="https://learn.microsoft.com/en-us/credentials/certifications/microsoft-office-specialist-associate-2019/" class="btn btn-secondary">Microsoft Office Specialist: Associate</a>
+					</div>
+			</div>
 		</div>
 	</body>
 </html>
