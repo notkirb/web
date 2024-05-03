@@ -139,12 +139,15 @@
 		</div>
 		<script>
 			function openApp(uri, name) {
-				new WinBox({
-					title: name,
-					url: uri,
-					x: "center",
-					y: "center",
-				});
+				// new WinBox({
+				// 	title: name,
+				// 	url: uri,
+				// 	x: "center",
+				// 	y: "center",
+				// });
+
+				// WinBox Currently broken with Cloudflare, opening apps in new tabs for now
+				window.open(uri);
 			}
 		</script>
 	</body>
