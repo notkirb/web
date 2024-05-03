@@ -6,8 +6,13 @@
 		<link rel="stylesheet" href="style.css">
         <title>notkirb_</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="winbox/winbox.bundle.min.js"></script>
 	</head>
 	<body>
+
+		
+		<br>
+		<div class="container">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-lg">
 			<div class="container">
 			  <a class="navbar-brand" href="index.html">notkirb_</a>
@@ -17,16 +22,16 @@
 			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" href="projects.html">projects</a> 
+						<a class="nav-link" href="projects.html">apps</a>
 					</li>
 					<li class=" nav-item">
-						<a class="nav-link" href="https://discord.gg/qtB3F6tyBc">discord</a> 
+						<a class="nav-link" href="https://discord.gg/qtB3F6tyBc">discord</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="https://twitter.com/@notkirb_">twitter</a> 
+						<a class="nav-link" href="https://twitter.com/@notkirb_">twitter</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="https://www.reddit.com/user/kirbylarson">reddit</a> 
+						<a class="nav-link" href="https://www.reddit.com/user/kirbylarson">reddit</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="https://youtube.com/@notkirb_">youtube</a>
@@ -34,11 +39,8 @@
 				</ul>
 			  </div>
 			</div>
-		  </nav>
-		
-		<br>
-		<div class="container">
-			<h3>Projects</h3>
+		  </nav><br>
+			<h3>Apps</h3>
 					<div class="row">
 						<div class="col-sm-3">
 							<div class="card">
@@ -46,7 +48,8 @@
 								<div class="card-body">
 									<h4 class="card-title">ISO-Downloader</h4>
 									<p class="card-text">A tool for downloading various ISO files of multiple different operating systems</p>
-									<a class="btn btn-primary" href="ISO-Downloader/index.html">Open</a>
+									<button type="button" class="btn btn-primary" onclick="openApp('ISO-Downloader/index.html', 'ISO-Downloader')">Open</button>
+									<!-- <a class="btn btn-primary" href="ISO-Downloader/index.html">Open</a> -->
 								</div>
 							</div>
 						</div>
@@ -98,8 +101,9 @@
 								<div class="card-body">
 									<h4 class="card-title">// cybersqr();</h4>
 									<p class="card-text">A simple but difficult video game.</p>
-									<a class="btn btn-primary" href="cybersqr.html">Play</a>
-									<a class="btn btn-secondary">Learn More</a>
+									<button type="button" class="btn btn-primary" onclick="openApp('cybersqr.html', 'cybersqr')">Open</button>
+									<!--<a class="btn btn-primary" href="cybersqr.html">Play</a>-->
+
 								</div>
 							</div>
 						</div>
@@ -109,7 +113,8 @@
 								<div class="card-body">
 									<h4 class="card-title">kone Client</h4>
 									<p class="card-text">My kone Client Mirror (playable without download!)</p>
-									<a class="btn btn-primary" href="koneclient/index.html" target="_blank" rel="noopener noreferrer">Launch</a>
+									<button type="button" class="btn btn-primary" onclick="openApp('koneclient/index.html', 'Kone Client')">Open</button>
+									<!--<a class="btn btn-primary" href="koneclient/index.html" target="_blank" rel="noopener noreferrer">Launch</a>-->
 								</div>
 							</div>
 						</div>
@@ -119,8 +124,10 @@
 								<div class="card-body">
 									<h4 class="card-title">Eaglercraft</h4>
 									<p class="card-text">Eaglercraft</p>
-									<a class="btn btn-primary" href="eaglercraft.html" target="_blank" rel="noopener noreferrer">Launch 1.5.2</a>
-									<a class="btn btn-primary" href="eaglercraft_beta_1.3.html" target="_blank" rel="noopener noreferrer">Launch Beta 1.3</a>
+									<!--<a class="btn btn-primary" href="eaglercraft.html" target="_blank" rel="noopener noreferrer">Launch 1.5.2</a>-->
+									<button type="button" class="btn btn-primary" onclick="openApp('eaglercraft.html', 'Eaglercraft')">Open 1.5.2</button>
+									<!--<a class="btn btn-primary" href="eaglercraft_beta_1.3.html" target="_blank" rel="noopener noreferrer">Launch Beta 1.3</a>-->
+									<button type="button" class="btn btn-primary" onclick="openApp('eaglercraft_beta_1.3.html', 'Eaglercraft')">Open Beta 1.3</button>
 								</div>
 							</div>
 						</div>
@@ -130,6 +137,16 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			function openApp(uri, name) {
+				new WinBox({
+					title: name,
+					url: uri,
+					x: "center",
+					y: "center",
+				});
+			}
+		</script>
 	</body>
 </html>
 
