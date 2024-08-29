@@ -47,9 +47,9 @@ html, body {
 #title {
 
     position: absolute;
-    width: 450px;
+    width: 544px;
     height: 50px;
-    left: calc(50% - 450px/2);
+    left: calc(50% - 544px/2);
     top: calc(50% - 50px/2 - 99px);
 
     font-family: 'Krona One';
@@ -78,6 +78,25 @@ html, body {
     text-align: center;
 
     color: #FFFFFF;
+}
+
+#socials {
+    position: absolute;
+    width: 434px;
+    height: 30px;
+    left: calc(50% - 434px/2);
+    top: calc(50% - 30px/2 + 90px);
+    
+    text-align: center;
+
+font-family: 'Krona One';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 30px;
+/* identical to box height */
+
+color: #FE752B;
 }
 
 #background { 

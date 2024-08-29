@@ -8,7 +8,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.OrthographicCamera(0, width, 0, height, 1, 2);
 camera.position.z = 2;
 
-const renderer = new THREE.WebGLRenderer({ alpha: true });
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "low-power" });
 renderer.setClearColor(0, 0);
 renderer.setSize(width, height);
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -40,9 +40,10 @@ const fs = `
 
     // if the difference between the lower level is within some range, paint the fragment, otherwise ignore it
     if (lowerDiff > 0.005)
+      gl_FragColor = vec4(color, 1.0);
+     
+    else
       discard;
-
-    gl_FragColor = vec4(color, 1.0);
   }
 `;
 
