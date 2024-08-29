@@ -137,3 +137,38 @@ text-align: center;
 color: #FFFFFF;
 
 text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+
+
+
+
+
+
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 544px;
+height: 371px;
+left: calc(50% - 544px/2);
+top: calc(50% - 371px/2 + 0.5px);
+
+background: rgba(16, 16, 16, 0.5);
+box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+backdrop-filter: blur(10px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 40px;
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 544px;
+height: 371px;
+left: calc(50% - 544px/2);
+top: calc(50% - 371px/2 + 0.5px);
+
+background: rgba(16, 16, 16, 0.5);
+box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+backdrop-filter: blur(10px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 40px;
+
