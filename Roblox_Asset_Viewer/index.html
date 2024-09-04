@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color:rgb(53, 54, 63);
+                color: white;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+        </style>
+    </head>
+    <body><center>
+        <h1>Roblox Asset Viewer</h1>
+        <p>Enter an ID for a game, decal, mesh, etc.</p>
+        <input id="assetInput" type="text"> <button onclick="goToAssetPage()">Go</button>
+
+        <p>Enter an ID for a user.</p>
+        <input id="userInput" type="text"> <button onclick="goToPlayerPage()">Go</button>
+    </body>
+
+    <script>
+        function goToAssetPage() {
+            let inputBox = document.getElementById("assetInput")
+            let assetId = inputBox.value
+            let baseUrl = "https://www.roblox.com/library/"
+            window.location.href = baseUrl.concat("", assetId);
+        }
+        function goToPlayerPage() {
+            let inputBox = document.getElementById("userInput")
+            let assetId = inputBox.value
+            let baseUrl = "https://www.roblox.com/users/"
+            window.location.href = baseUrl.concat("", assetId);
+        }
+    </script>
+</html>
