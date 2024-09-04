@@ -1,0 +1,174 @@
+/* Landing */
+
+position: relative;
+width: 1280px;
+height: 832px;
+
+background: url(new-windows-server-2025-wallpapers-v0-amc9oh9dt6kc1.jpg);
+
+
+/* Group 2 */
+
+position: absolute;
+width: 544px;
+height: 371px;
+left: 368px;
+top: 231px;
+
+
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 544px;
+height: 371px;
+left: calc(50% - 544px/2);
+top: calc(50% - 371px/2 + 0.5px);
+
+background: rgba(16, 16, 16, 0.5);
+backdrop-filter: blur(25px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 40px;
+
+
+/* 👋 Hi, I’m notkirb_ */
+
+position: absolute;
+width: 450px;
+height: 50px;
+left: calc(50% - 450px/2);
+top: calc(50% - 50px/2 - 99px);
+
+font-family: 'Krona One';
+font-style: normal;
+font-weight: 400;
+font-size: 40px;
+line-height: 50px;
+/* identical to box height */
+text-align: center;
+
+color: #FFFFFF;
+
+
+
+/* Hi. This is my website, where you can find various projects that I have created in my free time. Also I think this counts as something employers can look at so that’s cool I guess (Hire me pls) */
+
+position: absolute;
+width: 434px;
+height: 84px;
+left: calc(50% - 434px/2);
+top: calc(50% - 84px/2 - 5px);
+
+font-family: 'Kufam';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 21px;
+text-align: center;
+
+color: #FFFFFF;
+
+
+
+/* Group 1 */
+
+position: absolute;
+width: 414px;
+height: 68px;
+left: 433px;
+top: 481px;
+
+
+
+/* Reddit GitHub TikTok */
+
+position: absolute;
+width: 362px;
+height: 30px;
+left: calc(50% - 362px/2);
+top: calc(50% - 30px/2 + 118px);
+
+font-family: 'Krona One';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 30px;
+/* identical to box height */
+
+color: #FE752B;
+
+
+
+/* Discord YouTube Twitter */
+
+position: absolute;
+width: 414px;
+height: 30px;
+left: calc(50% - 414px/2);
+top: calc(50% - 30px/2 + 80px);
+
+font-family: 'Krona One';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 30px;
+/* identical to box height */
+
+color: #7D74FF;
+
+
+
+/* notkirb_ Projects Contact */
+
+position: absolute;
+width: 414px;
+height: 40px;
+left: calc(50% - 414px/2);
+top: 47px;
+
+font-family: 'Krona One';
+font-style: normal;
+font-weight: 400;
+font-size: 32px;
+line-height: 40px;
+/* identical to box height */
+text-align: center;
+
+color: #FFFFFF;
+
+text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+
+
+
+
+
+
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 544px;
+height: 371px;
+left: calc(50% - 544px/2);
+top: calc(50% - 371px/2 + 0.5px);
+
+background: rgba(16, 16, 16, 0.5);
+box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+backdrop-filter: blur(10px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 40px;
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 544px;
+height: 371px;
+left: calc(50% - 544px/2);
+top: calc(50% - 371px/2 + 0.5px);
+
+background: rgba(16, 16, 16, 0.5);
+box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+backdrop-filter: blur(10px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 40px;
+
