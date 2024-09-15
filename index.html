@@ -62,14 +62,15 @@
 					<hr>
 					<h3>Featured Projects</h3>
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-3"></div>
 							<div class="card">
-								<img src="mc_sunset.png">
+								<img src="silly-clicker/icon.png">
 								<div class="card-body">
-									<h4 class="card-title">Hemisphere Network</h4>
-									<p class="card-text">Hemisphere Network is a small Minecraft Server with rotating gameplay styles.</p>
-									<a class="btn btn-primary">Play now</a>
-									<a class="btn btn-secondary">Learn More</a>
+									<h4 class="card-title">Silly Clicker</h4>
+									<p class="card-text">yet another basic clicker game</p>
+									<button type="button" class="btn btn-primary" onclick="openApp('silly-clicker/index.html', 'Silly Clicker')">Open</button>
+									<!--<a class="btn btn-primary" href="cybersqr.html">Play</a>-->
+
 								</div>
 							</div>
 						</div>
@@ -116,6 +117,19 @@
 					</div>
 			</div>
 		</div>
+		<script>
+			function openApp(uri, name) {
+				// new WinBox({
+				// 	title: name,
+				// 	url: uri,
+				// 	x: "center",
+				// 	y: "center",
+				// });
+
+				// WinBox Currently broken with Cloudflare, opening apps in new tabs for now
+				window.open(uri);
+			}
+		</script>
 	</body>
 </html>
 
