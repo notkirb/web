@@ -27,12 +27,36 @@ html, body {
     top: calc(50% - 371px/2);
     border-radius: 40px;
     background-color: #10101080;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
     color: #ffffff;
     font-family: "Krona One", sans-serif;
     font-weight: 400;
     font-style: normal;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.5s ease-in-out;
+}
+#box:hover {
+    transform: scale(1.05);
+}
+
+#box-project {
+    position: absolute;
+    width: 1222px;
+    height: 75%;
+    left: calc(50% - 1222px/2);
+    top: calc(50% - 75%/2 + 53px);
+    border-radius: 40px;
+    background-color: #10101080;
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-family: "Krona One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.5s ease-in-out;
+}
+#box-project:hover {
+    transform: scale(1.05);
 }
 
 #oldbutton {
@@ -57,6 +81,37 @@ html, body {
     position: absolute;
 }
 
+#nav {
+
+    position: absolute;
+    width: 544px;
+    height: 50px;
+    left: calc(50% - 544px/2);
+    top: calc(50px/2 - 99px);
+
+    font-family: 'Krona One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 50px; 
+
+    text-align: center;
+
+    color: #FFFFFF;
+}
+.navlink {
+    text-decoration: none;
+    color: #FFFFFF;
+    transition: all 0.2s ease-in-out;
+}
+.navlink:hover {
+    font-size: 36px;
+}
+.nav-active {
+    font-size: 30px;
+    font-style: oblique;
+}
+
 #title {
 
     position: absolute;
@@ -76,6 +131,34 @@ html, body {
     color: #FFFFFF;
 }
 
+#project-title {
+
+    position: absolute;
+    width: 544px;
+    height: 50px;
+    left: calc(50% - 544px/2);
+    top: calc(50px);
+
+    font-family: 'Krona One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 50px; 
+
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+#repo-iframe {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 150px);
+    top: 100px;
+    border: none;
+    background-color: none;
+}
+
 #content {
     position: absolute;
     width: 434px;
@@ -91,6 +174,7 @@ html, body {
     text-align: center;
 
     color: #FFFFFF;
+    
 }
 
 #socials {
@@ -108,14 +192,17 @@ font-weight: 400;
 font-size: 24px;
 line-height: 30px;
 /* identical to box height */
-
-color: #FE752B;
 }
 
 /* socials */
 
 [id*=lnk] {
     text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+[id*=lnk]:hover {
+    font-size: 30px;
+    color: #ffffff !important;
 }
 
 #lnk-dc {
@@ -173,3 +260,4 @@ color: #FE752B;
       50%{background-position:100% 19%}
       100%{background-position:0% 82%}
   }
+

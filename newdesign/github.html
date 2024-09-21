@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Repositories</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Kufam:ital,wght@0,400..900;1,400..900&display=swap');
+    body {
+      font-family: "Krona One", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      color: #ffffff; /* Light text color */
+      padding: 40px;
+      overflow-y: scroll; /* Enable vertical scrollbar */
+      
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+      padding: 8px;
+      padding-left: 12px;
+      padding-right: 12px;
+      background-color: #2d2d2d30; /* Darker background for each repository */
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      transition: all 0.2s ease-in-out; /* Add transition for hover effect */
+      backdrop-filter: blur(4px);
+      margin-top: 12px;
+    }
+
+    a:hover {
+      background-color: #ffffff83;
+      color: black;
+      box-shadow: 0px 0px 20px #ffffff
+    }
+
+    .repository {
+      margin-bottom: 20px;
+      padding: 15px;
+      margin-top: none;
+      padding-top: none;
+      background-color: #2d2d2d88; /* Darker background for each repository */
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      transition: all 0.2s ease-in-out; /* Add transition for hover effect */
+      backdrop-filter: blur(16px);
+    }
+
+    .repository:hover {
+      transform: scale(1.02); /* Hover effect for repository cards */
+      box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.25);
+    }
+
+    .language-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    /* GitHub language colors */
+    .javascript { background-color: #f1e05a; }
+    .html { background-color: #e34c26; }
+    .css { background-color: #563d7c; }
+    .python { background-color: #3572A5; }
+    .java { background-color: #b07219; }
+    .ruby { background-color: #701516; }
+    .php { background-color: #4F5D95; }
+    .csharp { background-color: #178600; }
+    .typescript { background-color: #2b7489; }
+    .go { background-color: #00ADD8; }
+    .swift { background-color: #ffac45; }
+    .shell { background-color: #89e051; }
+    .r { background-color: #198CE7; }
+    .rust { background-color: #dea584; }
+    .kotlin { background-color: #F18E33; }
+    .objective-c { background-color: #438eff; }
+    .vue { background-color: #41b883; }
+    .scala { background-color: #c22d40; }
+    .perl { background-color: #0298c3; }
+    .lua { background-color: #000080; }
+    .haskell { background-color: #5e5086; }
+    .groovy { background-color: #4298B8; }
+    .powershell { background-color: #012456; }
+    .elixir { background-color: #6e4a7e; }
+    .dart { background-color: #00B4AB; }
+    .clojure { background-color: #db5855; }
+    .fsharp { background-color: #b845fc; }
+    .vimscript { background-color: #199f4b; }
+    .matlab { background-color: #e16737; }
+    .cobol { background-color: #555555; }
+    .julia { background-color: #a270ba; }
+    .lua { background-color: #000080; }
+    /* Add more languages as needed */
+
+    /* Stylize the scrollbar */
+    body::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-color: #1b1b1b; /* Darker color for the thumb */
+      border-radius: 10px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background-color: #1e1e1e; /* Color of the track */
+      border-radius: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="main">
+    <div class="repository">
+
+      <h2>Silly Clicker</h2>
+      <p>yet another basic clicker game</p>
+      <a href="../silly-clicker/" target="_blank">Play</a>
+    
+    </div>
+    <div class="repository">
+
+      <h2>Deamazonifier</h2>
+      <p>The easiest-to-use Amazon Fire Tablet debloater ever.</p>
+      <a href="https://github.com/notkirb/Deamazonifier" target="_blank">Learn More</a>
+    
+    </div>
+    <div class="repository">
+
+      <h2>// cybersqr();</h2>
+      <p>A simple but difficult video game.</p>
+      <a href="../cybersqr.html" target="_blank">Play</a>
+    
+    </div>
+    <div class="repository">
+
+      <h2>Roblox Asset Viewer</h2>
+      <p>takes a user to a roblox asset page based on the ID entered</p>
+      <a href="../Roblox_Asset_Viewer/" target="_blank">Open</a>
+    
+    </div>
+    <div class="repository">
+
+      <h2>ISO-Downloader</h2>
+      <p>A tool for downloading various ISO files of multiple different operating systems</p>
+      <a href="../ISO-Downloader/" target="_blank">Open</a>
+    
+    </div>
+  </div>
+  <h1>Github Repositories</h1>
+  <div id="repositories"></div>
+
+  <script>
+    // GitHub username
+    const username = 'notkirb';
+
+    // GitHub API endpoint for repositories
+    const apiUrl = `https://api.github.com/users/${username}/repos`;
+
+    // Function to fetch and display repositories
+    async function fetchRepositories() {
+      try {
+        const response = await fetch(apiUrl);
+        const repositories = await response.json();
+
+        // Get the container element
+        const repositoriesContainer = document.getElementById('repositories');
+
+        // Loop through the repositories and create a card for each
+        repositories.forEach(repo => {
+          const repoCard = document.createElement('div');
+          repoCard.classList.add('repository');
+
+          // Map languages to GitHub colors
+          const languageColor = {
+            'JavaScript': 'javascript',
+            'HTML': 'html',
+            'CSS': 'css',
+            'Python': 'python',
+            'Java': 'java',
+            'Ruby': 'ruby',
+            'PHP': 'php',
+            'C#': 'csharp',
+            'TypeScript': 'typescript',
+            'Go': 'go',
+            'Swift': 'swift',
+            'Shell': 'shell',
+            'R': 'r',
+            'Rust': 'rust',
+            'Kotlin': 'kotlin',
+            'Objective-C': 'objective-c',
+            'Vue': 'vue',
+            'Scala': 'scala',
+            'Perl': 'perl',
+            'Lua': 'lua',
+            'Haskell': 'haskell',
+            'Groovy': 'groovy',
+            'PowerShell': 'powershell',
+            'Elixir': 'elixir',
+            'Dart': 'dart',
+            'Clojure': 'clojure',
+            'F#': 'fsharp',
+            'VimScript': 'vimscript',
+            'Matlab': 'matlab',
+            'COBOL': 'cobol',
+            'Julia': 'julia',
+            /* Add more languages as needed */
+          };
+
+          repoCard.innerHTML = `
+            <h2>${repo.name}</h2>
+            <p>${repo.description || 'No description available'}</p>
+            <p>
+              <strong>Language:</strong>
+              <span class="language-dot ${languageColor[repo.language] || 'not-specified'}"></span>
+              ${repo.language || 'Not specified'}
+            </p>
+            <p><strong>Stars:</strong> ${repo.stargazers_count}</p>
+            <a href="${repo.html_url}" target="_blank">View on GitHub</a>
+          `;
+
+          // Append the repository card to the container
+          repositoriesContainer.appendChild(repoCard);
+        });
+      } catch (error) {
+        console.error('Error fetching repositories:', error.message);
+      }
+    }
+
+    // Fetch and display repositories when the page loads
+    window.onload = fetchRepositories;
+  </script>
+
+</body>
+</html

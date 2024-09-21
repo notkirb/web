@@ -15,3 +15,11 @@ nav {
   z-index: 2;
   border-radius: 12px 12px 0 0;
 }
+
+.project-tile {
+  transition: transform 0.2s ease-in-out;
+}
+
+.project-tile:hover {
+  transform: scale(1.02);
+}
