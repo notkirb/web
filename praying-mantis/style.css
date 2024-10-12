@@ -7,6 +7,7 @@ body {
     justify-content: center;
     background-image: url(mantis-tile.png);
     background-repeat: repeat;
+    background-attachment: fixed;
 }
 .main {
     background-color: #e99191;
@@ -23,6 +24,24 @@ body {
 .main p,h1,a {
     padding: 24px;
 }
+
+.main a {
+    background-color: #b68181;
+    color: #fff962;
+    margin: 24px;
+    text-decoration: none;
+    border-radius: 16px;
+    transition: all 0.2s ease-in-out;
+    border-color: #fff962;
+}
+
+.main a:hover {
+    background-color: #503636;
+    color: white;
+    text-decoration: underline;
+    border-radius: 0;
+}
+
 .main img {
     width: 100%;
     height: auto;
