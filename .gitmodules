@@ -1,0 +1,6 @@
+[submodule "mantis-hd"]
+	path = mantis-hd
+	url = https://github.com/notkirb/mantis-hd
+[submodule "praying-mantis/mantis-hd"]
+	path = praying-mantis/mantis-hd
+	url = https://github.com/notkirb/mantis-hd
