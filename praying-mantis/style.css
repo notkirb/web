@@ -5,6 +5,8 @@ body {
     display: flex; 
     flex-direction: row; 
     justify-content: center;
+    background-image: url(mantis-tile.png);
+    background-repeat: repeat;
 }
 .main {
     background-color: #e99191;
@@ -18,7 +20,7 @@ body {
     padding: 0;
     margin: 0;
 }
-.main p,h1 {
+.main p,h1,a {
     padding: 24px;
 }
 .main img {
