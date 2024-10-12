@@ -122,109 +122,28 @@
   <div id="main">
     <div class="repository">
 
-      <h2>Deamazonifier</h2>
-      <p>The easiest-to-use Amazon Fire Tablet debloater ever.</p>
-      <a href="https://github.com/notkirb/Deamazonifier" target="_blank">Learn More</a>
+      <h2>Praying Mantis UMA: Chapter 1</h2>
+      <p>Ohhh nooo!!!!</p>
+      <a href="../praying-mantis/index.html" target="_blank">Play</a>
     
     </div>
     <div class="repository">
 
-      <h2>Roblox Asset Viewer</h2>
-      <p>takes a user to a roblox asset page based on the ID entered</p>
-      <a href="../Roblox_Asset_Viewer/" target="_blank">Open</a>
+      <h2>Silly Clicker</h2>
+      <p>yet another basic clicker game</p>
+      <a href="../silly-clicker/" target="_blank">Play</a>
     
     </div>
     <div class="repository">
 
-      <h2>ISO-Downloader</h2>
-      <p>A tool for downloading various ISO files of multiple different operating systems</p>
-      <a href="../ISO-Downloader/" target="_blank">Open</a>
+      <h2>// cybersqr();</h2>
+      <p>A simple but difficult video game.</p>
+      <a href="../cybersqr.html" target="_blank">Play</a>
     
     </div>
+
   </div>
-  <h1>Github Repositories</h1>
-  <div id="repositories"></div>
-
-  <script>
-    // GitHub username
-    const username = 'notkirb';
-
-    // GitHub API endpoint for repositories
-    const apiUrl = `https://api.github.com/users/${username}/repos`;
-
-    // Function to fetch and display repositories
-    async function fetchRepositories() {
-      try {
-        const response = await fetch(apiUrl);
-        const repositories = await response.json();
-
-        // Get the container element
-        const repositoriesContainer = document.getElementById('repositories');
-
-        // Loop through the repositories and create a card for each
-        repositories.forEach(repo => {
-          const repoCard = document.createElement('div');
-          repoCard.classList.add('repository');
-
-          // Map languages to GitHub colors
-          const languageColor = {
-            'JavaScript': 'javascript',
-            'HTML': 'html',
-            'CSS': 'css',
-            'Python': 'python',
-            'Java': 'java',
-            'Ruby': 'ruby',
-            'PHP': 'php',
-            'C#': 'csharp',
-            'TypeScript': 'typescript',
-            'Go': 'go',
-            'Swift': 'swift',
-            'Shell': 'shell',
-            'R': 'r',
-            'Rust': 'rust',
-            'Kotlin': 'kotlin',
-            'Objective-C': 'objective-c',
-            'Vue': 'vue',
-            'Scala': 'scala',
-            'Perl': 'perl',
-            'Lua': 'lua',
-            'Haskell': 'haskell',
-            'Groovy': 'groovy',
-            'PowerShell': 'powershell',
-            'Elixir': 'elixir',
-            'Dart': 'dart',
-            'Clojure': 'clojure',
-            'F#': 'fsharp',
-            'VimScript': 'vimscript',
-            'Matlab': 'matlab',
-            'COBOL': 'cobol',
-            'Julia': 'julia',
-            /* Add more languages as needed */
-          };
-
-          repoCard.innerHTML = `
-            <h2>${repo.name}</h2>
-            <p>${repo.description || 'No description available'}</p>
-            <p>
-              <strong>Language:</strong>
-              <span class="language-dot ${languageColor[repo.language] || 'not-specified'}"></span>
-              ${repo.language || 'Not specified'}
-            </p>
-            <p><strong>Stars:</strong> ${repo.stargazers_count}</p>
-            <a href="${repo.html_url}" target="_blank">View on GitHub</a>
-          `;
-
-          // Append the repository card to the container
-          repositoriesContainer.appendChild(repoCard);
-        });
-      } catch (error) {
-        console.error('Error fetching repositories:', error.message);
-      }
-    }
-
-    // Fetch and display repositories when the page loads
-    window.onload = fetchRepositories;
-  </script>
+  
 
 </body>
 </html
