@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minecraft Screenshots</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 1rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    #gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); /* flexible 3–5 columns */
+        gap: 10px;
+        justify-items: center;
+        padding: 10px;
+    }
+
+    #gallery img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        cursor: pointer;
+    }
+
+    /* Mobile: force 1 column spanning full width */
+    @media (max-width: 600px) {
+        #gallery {
+        grid-template-columns: 1fr;
+        }
+
+        #gallery img {
+        max-width: 100%;
+        }
+    }
+  </style>
+</head>
+<body>
+  <h1>Minecraft Screenshots</h1>
+  <div class="grid" id="gallery"></div>
+
+  <script>
+    const DUFS_URL = "https://myfiles.notkirb.com/mcshots"; // change this
+
+    async function loadImages() {
+        try {
+            const res = await fetch(DUFS_URL + "?json");
+            const data = await res.json();
+
+            let files = data.paths;
+
+            if (!Array.isArray(files)) {
+                console.error("No paths array found in response");
+                return;
+            }
+
+            // Filter to images only
+            files = files.filter(file =>
+                file.path_type === "File" &&
+                /\.(png|jpe?g|gif|webp)$/i.test(file.name)
+            );
+
+            // Sort newest first (by mtime, descending)
+            files.sort((a, b) => b.mtime - a.mtime);
+
+            const gallery = document.getElementById("gallery");
+
+            files.forEach(file => {
+                const imgUrl = DUFS_URL + "/" + encodeURIComponent(file.name);
+
+                // Create clickable link
+                const link = document.createElement("a");
+                link.href = imgUrl;
+                link.target = "_blank"; // open in new tab
+
+                // Create image
+                const img = document.createElement("img");
+                img.src = imgUrl;
+                img.alt = file.name;
+                img.style.maxWidth = "500px";
+                img.style.margin = "5px";
+                img.style.cursor = "pointer";
+                img.style.borderRadius = "8px";
+                img.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+
+                link.appendChild(img);
+                gallery.appendChild(link);
+            });
+        } catch (err) {
+            console.error("Error loading images:", err);
+        }
+    }
+
+    loadImages();
+</script>
+
+</body>
+</html>
