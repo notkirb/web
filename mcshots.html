@@ -3,51 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <title>Minecraft Screenshots</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <style>
     body {
       font-family: sans-serif;
-      background: #f4f4f4;
+      background: #121212;
       margin: 0;
-      padding: 1rem;
+      padding: 0;
     }
-    h1 {
+    p {
       text-align: center;
-      margin-bottom: 1rem;
+      margin: 22px;
+      color: #e3e3e3;
     }
     #gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); /* flexible 3–5 columns */
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 2fr)); /* flexible 3–5 columns */
+        gap: 0;
         justify-items: center;
-        padding: 10px;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
     }
 
     #gallery img {
         width: 100%;
         height: auto;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        border-radius: 0;
         cursor: pointer;
+        margin: 0;
+        display: block;
+        transition: scale 0.1s, border-radius 0.1s, box-shadow 0.1s;
+    }
+
+    #gallery img:hover {
+      z-index: 10;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
     }
 
     /* Mobile: force 1 column spanning full width */
-    @media (max-width: 600px) {
+    @media (max-width: 800px) {
         #gallery {
-        grid-template-columns: 1fr;
+          grid-template-columns: 1fr;
         }
 
         #gallery img {
-        max-width: 100%;
+          max-width: 100%;
         }
+        #gallery img:hover {
+          scale: 100%;
+        }
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      transition: transform 0.2s ease;
+    }
+
+    .image-container img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .image-caption {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 12px;
+      padding: 3px 6px;
+      border-radius: 7px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+
+    .image-container:hover {
+      z-index: 10;              /* bring above others */
+      transform: scale(1.03);   /* scale the container, not just img */
+    }
+
+    .image-container img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .image-container:hover .image-caption {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <h1>Minecraft Screenshots</h1>
+
   <div class="grid" id="gallery"></div>
 
+  <p>This page includes an always up-to-date list of screenshots that I create while playing Minecraft. New screenshots populate within 15 seconds of me pressing F2.</p>
+
   <script>
+    //const DUFS_URL = "http://192.168.12.163:5000/mcshots"; // change this
     const DUFS_URL = "https://myfiles.notkirb.com/mcshots"; // change this
 
     async function loadImages() {
@@ -74,25 +131,43 @@
             const gallery = document.getElementById("gallery");
 
             files.forEach(file => {
-                const imgUrl = DUFS_URL + "/" + encodeURIComponent(file.name);
+              const imgUrl = DUFS_URL + "/" + encodeURIComponent(file.name);
 
-                // Create clickable link
-                const link = document.createElement("a");
-                link.href = imgUrl;
-                link.target = "_blank"; // open in new tab
+              // clickable link
+              const link = document.createElement("a");
+              link.href = imgUrl;
+              link.target = "_blank";
 
-                // Create image
-                const img = document.createElement("img");
-                img.src = imgUrl;
-                img.alt = file.name;
-                img.style.maxWidth = "500px";
-                img.style.margin = "5px";
-                img.style.cursor = "pointer";
-                img.style.borderRadius = "8px";
-                img.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+              // container
+              const container = document.createElement("div");
+              container.className = "image-container";
 
-                link.appendChild(img);
-                gallery.appendChild(link);
+              // image
+              const img = document.createElement("img");
+              img.src = imgUrl;
+              img.alt = file.name;
+
+              // caption (mtime → human readable)
+              const caption = document.createElement("div");
+              caption.className = "image-caption";
+
+              // convert UNIX mtime (seconds) → human readable date
+              const date = new Date(file.mtime);
+              const options = {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true
+              };
+              caption.textContent = date.toLocaleString("en-US", options);
+
+              // assemble
+              container.appendChild(img);
+              container.appendChild(caption);
+              link.appendChild(container);
+              gallery.appendChild(link);
             });
         } catch (err) {
             console.error("Error loading images:", err);
