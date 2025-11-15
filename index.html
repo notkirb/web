@@ -1,1 +1,490 @@
-<meta http-equiv="Refresh" content="0; url='./newdesign/index.html" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/7.css" />
+    <title>notkirb_</title>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            // Only handle one particular tablist; if you have multiple tab
+            // lists (might even be nested), you have to apply this code for each one
+            const tabList = document.querySelector('[role="tablist"]');
+            const tabs = tabList.querySelectorAll(':scope > [role="tab"]');
+
+            // Add a click event handler to each tab
+            tabs.forEach((tab) => {
+                tab.addEventListener("click", changeTabs);
+            });
+
+            // Enable arrow navigation between tabs in the tab list
+            let tabFocus = 0;
+
+            tabList.addEventListener("keydown", (e) => {
+                // Move right
+                if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+                    tabs[tabFocus].setAttribute("tabindex", -1);
+                    if (e.key === "ArrowRight") {
+                        tabFocus++;
+                        if (tabFocus >= tabs.length) {
+                            tabFocus = 0;
+                        }
+                    } else if (e.key === "ArrowLeft") {
+                        tabFocus--;
+                        if (tabFocus < 0) {
+                            tabFocus = tabs.length - 1;
+                        }
+                    }
+
+                    tabs[tabFocus].setAttribute("tabindex", 0);
+                    tabs[tabFocus].focus();
+                }
+            });
+        });
+
+        function changeTabs(e) {
+            const targetTab = e.target;
+            const tabList = targetTab.parentNode;
+            const tabGroup = tabList.parentNode;
+
+            // Remove all current selected tabs
+            tabList
+                .querySelectorAll(':scope > [aria-selected="true"]')
+                .forEach((t) => t.setAttribute("aria-selected", false));
+
+            // Set this tab as selected
+            targetTab.setAttribute("aria-selected", true);
+
+            // Hide all tab panels
+            tabGroup
+                .querySelectorAll(':scope > [role="tabpanel"]')
+                .forEach((p) => p.setAttribute("hidden", true));
+
+            // Show the selected panel
+            tabGroup
+                .querySelector(`#${targetTab.getAttribute("aria-controls")}`)
+                .removeAttribute("hidden");
+        }
+
+        // Function to fetch and display repositories
+        async function fetchRepositories(owner) {
+            const url = `https://api.github.com/users/${owner}/repos`;
+
+            try {
+                // const response = await fetch(url, {
+                //     headers: {
+                //         Authorization: `token ${GITHUB_TOKEN}`
+                //     }
+                // });
+                const response = await fetch(url);
+                const repositories = await response.json();
+
+                // Get the container element
+                const repositoriesContainer = document.getElementById('github-project-container');
+
+                // Loop through the repositories and create a card for each
+                repositories.forEach(repo => {
+                const repoCard = document.createElement('details');
+                repoCard.classList.add('repository');
+
+                repoCard.innerHTML = `
+                    <summary>${repo.name}</summary>
+                    <ul>
+                    <li>${repo.description || 'No description available'}</li>
+                    <li>Language: ${repo.language || 'Not specified'}</li>
+                    <li>
+                        <details open>
+                        <summary>Links</summary>
+                        <ul>
+                            <li><a href="${repo.html_url}">Repository</a></li>
+                            <li><a href="${repo.html_url}/stargazers">${repo.stargazers_count} stars</a></li>
+                            <li><a href="${repo.html_url}/issues">Issues</a></li>
+                        </ul>
+                        </details>
+                    </li>
+                    </ul>
+                `;
+
+                // Append the repository card to the container
+                repositoriesContainer.appendChild(repoCard);
+                });
+            } catch (error) {
+                console.error('Error fetching repositories:', error.message);
+            }
+        }
+
+        async function getFileStats(owner, repo, path = "") {
+            const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+            try {
+                // const response = await fetch(url, {
+                //     headers: {
+                //         Authorization: `token ${GITHUB_TOKEN}`
+                //     }
+                // });
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!Array.isArray(data)) {
+                    console.error('Error: Invalid response from GitHub API');
+                    return { count: 0, size: 0 };
+                }
+
+                let totalCount = 0;
+                let totalSize = 0;
+
+                for (const item of data) {
+                    if (item.type === "file") {
+                        totalCount++;
+                        totalSize += item.size || 0;
+                    } else if (item.type === "dir") {
+                        // // Uncomment to enable recursive file count. Not recomended since it will use a lot of requests if your repo has a lot of directories.
+                        //
+                        // const subStats = await getFileStats(owner, repo, item.path);
+                        // totalCount += subStats.count;
+                        // totalSize += subStats.size;
+                    }
+                }
+
+                return { count: totalCount, size: totalSize };
+            } catch (error) {
+                console.error("Error fetching repository contents:", error);
+                return { count: 0, size: 0 };
+            }
+        }
+        
+        function formatBytes(bytes, decimals = 2) {
+            if (!+bytes) return '0 Bytes'
+
+            const k = 1000
+            const dm = decimals < 0 ? 0 : decimals
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+            const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+        }
+
+        async function getLatestCommitDate(owner, repo) {
+            const url = `https://api.github.com/repos/${owner}/${repo}/commits`;
+
+            try {
+                // const response = await fetch(url, {
+                //     headers: {
+                //         Authorization: `token ${GITHUB_TOKEN}`
+                //     }
+                // });
+                const response = await fetch(url);
+
+                const data = await response.json();
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    console.error('Error: No commits found');
+                    return null;
+                }
+
+                const isoDate = data[0].commit.committer.date;
+                const date = new Date(isoDate);
+
+                const options = {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                };
+
+                const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+                return formattedDate;
+
+            } catch (error) {
+                console.error("Error fetching latest commit:", error);
+                return null;
+            }
+        }
+
+        window.onload = async function(){  
+
+            let repoStatsFileCount = null
+            let repoStatsSize = null
+
+            getFileStats("notkirb", "web").then(stats => {
+                document.getElementById("status-files").textContent = stats.count + " Files (" + formatBytes(stats.size) + ")"
+            })
+            document.getElementById("status-updated").textContent = "Last updated: " + await getLatestCommitDate("notkirb", "web")
+
+            fetchRepositories("notkirb");
+        }
+
+    </script>
+    <style>
+        .main_window {
+            position: absolute; 
+            left: 50%; 
+            top: 30%; 
+            transform: translate(-50%, -32px);
+            max-width: 550px;
+            min-width: min(550px, calc(100% - 48px));
+        }
+        body {
+            background-image: url(https://i.redd.it/over-50-frutiger-aero-wallpapers-2008ify-your-pc-v0-g6pvusd2nz9b1.jpg?width=3878&format=pjpg&auto=webp&s=6025d8769d4a6717ec19c517b9976949399b59ed);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        #photo-gallery {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding: 0;
+            column-gap: 12px;
+            row-gap: 12px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border: 1px solid;
+                border-color: #abadb3 #dbdfe6 #e3e9ef #e2e3ea;
+                border-radius: 2px;
+                transition: border-color 0.5s;
+
+                &:hover {
+                    border-color: #5794bf #b7d5ea #c7e2f1 #c5daed;
+                    transition: border-color 0.3s;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-color: #3d7bad #a4c9e3 #b7d9ed #b5cfe7;
+                }
+            }
+        }
+        article {
+            padding-top: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    
+      <div class="window glass active main_window">
+        <div class="title-bar">
+          <div class="title-bar-text">notkirb.com</div>
+          <div class="title-bar-controls">
+            <button aria-label="Close" onclick="location.href='https://notkirb.com/';"></button>
+          </div>
+        </div>
+        <div class="window-body has-space">
+            
+          <menu role="tablist" aria-label="Window with Tabs">
+            <button role="tab" aria-controls="home" aria-selected="true">Home</button>
+            <button role="tab" aria-controls="projects">Projects</button>
+            <button role="tab" aria-controls="games">Games</button>
+            <button role="tab" aria-controls="gallery">Gallery</button>
+            <button role="tab" aria-controls="contact">Contact</button>
+          </menu>
+          <article role="tabpanel" id="home">
+            <h1>About me</h1>
+            <p>Hi, I'm notkirb_. I'm just a silly highschool student who likes computers :3 </p>
+            <p>I enjoy playing video games, making video games, and coding random stuff. I am a beginner in music, and I am wanting to learn art, but I've never had the motivation to start. </p>
+            <p>The programming languages I know best are: Scratch (with deep knowledge of advanced techniques and modded editors), Luau (used in games I make in Roblox), and Python. I am learning Java and JavaScript right now, and I also know a bit about HTML and CSS. I am by no means a qualified web developer, but I am skilled enough to create simple static webpages, such as this one.</p>
+            <p>I am enjoying working on servers and networks right now. I built a homelab that consists of things I had lying around: a Raspberry Pi 4B 2GB, 2 Portable USB HDDs each with a capacity of 1TB, a couple fans, and a custom-designed 3D-printed case that puts it all in a neat package. The server runs Tailscale, Immich (which doesn't have ML installed because it would be too demanding for the Pi), SyncThing, and Home Assistant. I currently have an issue with the Pi not providing enough power to the HDDs, but I can fix that with a simple powered USB hub.</p>
+            <p>I am currently looking for a job or an internship, so if you are an employer looking to hire someone who has knowledge in computers, please contact me! I would highly appriciate it. Just click on the "Contact" tab at the top, then choose your preferred communication method!</p>
+          </article>
+      
+          <article role="tabpanel" hidden id="projects">
+            <h1>Projects</h1>
+            <p>
+                This is a list of some projects that I've made.
+            </p>
+            <ul class="tree-view has-collapse-button has-connector has-container">
+                <details open>
+                    <summary>Featured Projects</summary>
+                    <ul id="project-container">
+                        <details>
+                            <summary>Deamazonifier</summary>
+                            <ul>
+                                <li>The simplest Amazon Fire Tablet debloater ever.</li>
+                                <li>
+                                    <details open>
+                                    <summary>Links</summary>
+                                    <ul>
+                                        <li><a href="https://github.com/notkirb/Deamazonifier">Learn More</a></li>
+                                    </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>Chatless</summary>
+                            <ul>
+                                <li>Completely remove all forms of communication from Minecraft with a Paper plugin.</li>
+                                <li>
+                                    <details open>
+                                    <summary>Links</summary>
+                                    <ul>
+                                        <li><a href="https://github.com/notkirb/Chatless">Learn More</a></li>
+                                    </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>Ocean</summary>
+                            <ul>
+                                <li>Download and build free or premium Minecraft server plugins at no cost.</li>
+                                <li>
+                                    <details open>
+                                    <summary>Links</summary>
+                                    <ul>
+                                        <li><a href="https://github.com/notkirb/Ocean">Learn More</a></li>
+                                    </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary>Equilibrium (formerly SyncCommAudio)</summary>
+                            <ul>
+                                <li>Fix Windows communication devices becoming unsynced from default devices</li>
+                                <li>
+                                    <details open>
+                                    <summary>Links</summary>
+                                    <ul>
+                                        <li><a href="https://github.com/notkirb/Equilibrium">Learn More</a></li>
+                                    </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                    </ul>
+                </details>
+                <details>
+                    <summary>Public Github Repositories</summary>
+                    <ul id="github-project-container">
+                        
+                    </ul>
+                </details>
+            </ul>
+          </article>
+
+          <article role="tabpanel" hidden id="games">
+            <h1>Games</h1>
+            <p>
+                <p>
+                    Here is a list of games I made and sometimes maintain.
+                </p>
+                <ul class="tree-view has-collapse-button has-connector has-container" id="games-container">
+                    <details>
+                        <summary>Praying Mantis UMA: Chapter 1 [NSFW]</summary>
+                        <ul>
+                            <li>singleplayer 2d platformer shooter adventure [For audiences ages 16 and up | crude humor, suggestive themes]</li>
+                            <li>
+                                <details open>
+                                <summary>Links</summary>
+                                <ul>
+                                    <li><a href="https://notkirb.com/praying-mantis/index.html">Play</a></li>
+                                </ul>
+                                </details>
+                            </li>
+                        </ul>
+                    </details>
+                    <details>
+                        <summary>// cybersqr();</summary>
+                        <ul>
+                            <li>A simple but difficult game about squares.</li>
+                            <li>
+                                <details open>
+                                <summary>Links</summary>
+                                <ul>
+                                    <li><a href="https://notkirb.com/cybersqr.html">Play</a></li>
+                                </ul>
+                                </details>
+                            </li>
+                        </ul>
+                    </details>
+                    <details>
+                        <summary>Deathspread: Season 3</summary>
+                        <ul>
+                            <li>Minecraft SMP with Zombie Infection</li>
+                            <li>
+                                <details open>
+                                <summary>Links</summary>
+                                <ul>
+                                    <li><a href="https://notkirb.com/deathspread/index.html">Play</a></li>
+                                </ul>
+                                </details>
+                            </li>
+                        </ul>
+                    </details>
+                    <details>
+                        <summary>Silly Clicker</summary>
+                        <ul>
+                            <li>An clicker game with deep lore. (lore not yet created)</li>
+                            <li>
+                                <details open>
+                                <summary>Links</summary>
+                                <ul>
+                                    <li><a href="https://www.notkirb.com/silly-clicker/">Play</a></li>
+                                </ul>
+                                </details>
+                            </li>
+                        </ul>
+                    </details>
+                    <details>
+                        <summary>LIFE SWAP</summary>
+                        <ul>
+                            <li>a REALLY bad attempt at a rougelike. whatever you do please DO NOT PLAY!!!!</li>
+                            <li>
+                                <details open>
+                                <summary>Links</summary>
+                                <ul>
+                                    <li><a href="https://www.notkirb.com/LIFE%20SWAP">Play</a></li>
+                                </ul>
+                                </details>
+                            </li>
+                        </ul>
+                    </details>
+                </ul>
+            </p>
+          </article>
+
+          <article role="tabpanel" hidden id="gallery">
+            <h1>Gallery</h1>
+            <p>
+                Heres some screenshots and other stuff.
+            </p>
+            <div id="photo-gallery">
+                <img src="https://notkirb.com/immersivecraft.png">
+                <img src="https://notkirb.com/mc_sunset.png">
+                <img src="https://notkirb.com/me.webp">
+                <img src="https://notkirb.com/silly_cat.jpg">
+                <img src="https://s6.imgcdn.dev/YKuVOK.png">
+                <img src="https://s6.imgcdn.dev/YKufgo.png">
+                <img src="https://s6.imgcdn.dev/YKudSn.jpg">
+                <img src="https://s6.imgcdn.dev/YKuWQO.jpg">
+                <img src="https://s6.imgcdn.dev/YKubcv.jpg">
+            </div>
+          </article>
+      
+          <article role="tabpanel" hidden id="contact">
+            <h1>Contact</h1>
+            <p>
+                Send me a message and I will reply as soon as I can.
+            </p>
+            <section class="field-row" style="justify-content: flex-end">
+                <button onclick="location.href='https://notkirb.com/dc';">Discord</button>
+                <button onclick="location.href='https://notkirb.com/tw';">Twitter</button>
+                <button onclick="location.href='mailto:notkirb@proton.me';">Email</button>
+            </section>
+            
+          </article>
+        </div>
+        <div class="status-bar">
+            <p class="status-bar-field">notkirb.com</p>
+            <p class="status-bar-field" id="status-files">Getting files...</p>
+            <p class="status-bar-field" id="status-updated">Getting current commit...</p>
+          </div>
+      </div>
+</body>
+</html>
