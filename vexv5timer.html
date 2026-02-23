@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VEX V5 Match Timer</title>
+
+<style>
+    :root {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --auto: #22c55e;
+        --driver: #3b82f6;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --danger: #ef4444;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 2rem;
+        transition: background 0.5s ease;
+    }
+
+    body.endgame {
+        background: #7f1d1d;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1400px;
+        text-align: center;
+    }
+
+    .card {
+        background: var(--card);
+        padding: 3rem;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+        font-size: clamp(1.5rem, 3vw, 3rem);
+        color: var(--muted);
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .mode {
+        font-size: clamp(2rem, 5vw, 4rem);
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+
+    .timer {
+        font-size: clamp(6rem, 18vw, 14rem);
+        font-weight: 900;
+        margin: 1rem 0 2rem;
+        letter-spacing: 6px;
+    }
+
+    .controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    button {
+        font-size: clamp(1rem, 2vw, 1.4rem);
+        padding: 0.8em 1.6em;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    .start { background: var(--auto); color: black; }
+    .driver-btn { background: var(--driver); color: white; }
+    .pause { background: #facc15; color: black; }
+    .reset { background: var(--danger); color: white; }
+    .skip { background: #64748b; color: white; }
+
+    .auto-mode { color: var(--auto); }
+    .driver-mode { color: var(--driver); }
+    .finished { color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>VEX V5 Match Timer</h1>
+        <div id="mode" class="mode auto-mode">Autonomous</div>
+        <div id="timer" class="timer">0:15</div>
+
+        <div class="controls">
+            <button class="start" onclick="startAuto()">Start Auto</button>
+            <button class="skip" onclick="skipAuto()">Skip Auto</button>
+            <button class="driver-btn" onclick="startDriver()">Start Driver</button>
+            <button class="pause" onclick="pauseTimer()">Pause</button>
+            <button class="reset" onclick="resetTimer()">Reset</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const AUTO_TIME = 15;
+    const DRIVER_TIME = 105;
+
+    let timeLeft = AUTO_TIME;
+    let mode = "auto";
+    let interval = null;
+    let running = false;
+
+    const timerEl = document.getElementById("timer");
+    const modeEl = document.getElementById("mode");
+    const bodyEl = document.body;
+
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s.toString().padStart(2, "0")}`;
+    }
+
+    function updateDisplay() {
+        timerEl.textContent = formatTime(timeLeft);
+
+        // 🔴 Endgame effect (20 seconds left in driver)
+        if (mode === "driver" && timeLeft <= 20 && timeLeft > 0) {
+            bodyEl.classList.add("endgame");
+        } else {
+            bodyEl.classList.remove("endgame");
+        }
+    }
+
+    function startCountdown(callback) {
+        if (running) return;
+        running = true;
+
+        interval = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateDisplay();
+            } else {
+                clearInterval(interval);
+                running = false;
+                bodyEl.classList.remove("endgame");
+                if (callback) callback();
+            }
+        }, 1000);
+    }
+
+    function startAuto() {
+        if (mode !== "auto") return;
+        startCountdown(() => {
+            modeEl.textContent = "Autonomous Complete";
+        });
+    }
+
+    function skipAuto() {
+        if (mode !== "auto") return;
+        pauseTimer();
+        timeLeft = 0;
+        modeEl.textContent = "Autonomous Skipped";
+        updateDisplay();
+    }
+
+    function startDriver() {
+        pauseTimer();
+        mode = "driver";
+        timeLeft = DRIVER_TIME;
+        modeEl.textContent = "Driver Control";
+        modeEl.className = "mode driver-mode";
+        updateDisplay();
+
+        startCountdown(() => {
+            modeEl.textContent = "Match Complete";
+            modeEl.className = "mode finished";
+        });
+    }
+
+    function pauseTimer() {
+        clearInterval(interval);
+        running = false;
+    }
+
+    function resetTimer() {
+        pauseTimer();
+        mode = "auto";
+        timeLeft = AUTO_TIME;
+        modeEl.textContent = "Autonomous";
+        modeEl.className = "mode auto-mode";
+        bodyEl.classList.remove("endgame");
+        updateDisplay();
+    }
+
+    updateDisplay();
+</script>
+
+</body>
+</html>
